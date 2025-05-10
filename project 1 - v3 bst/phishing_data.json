@@ -1,0 +1,130 @@
+[
+  {
+    "text": "Your PayPal account has been limited. Please click here to verify your details immediately: http://fake-paypal-login.com",
+    "label": "phishing"
+  },
+  {
+    "text": "Reminder: Your company’s security policy requires password updates every 90 days. Visit the internal portal.",
+    "label": "legit"
+  },
+  {
+    "text": "You've won a free iPhone! Click now to claim your prize: http://phishy-link.net",
+    "label": "phishing"
+  },
+  {
+    "text": "Your GitHub login was used from a new device. Was this you?",
+    "label": "legit"
+  },
+  {
+    "text": "Your bank account has been compromised. Click here to secure it: http://fake-bank-login.com",
+    "label": "phishing"
+  },
+  {
+    "text": "Your package has been shipped. Track it here: http://legit-tracking.com",
+    "label": "legit"
+  },
+  {
+    "text": "Congratulations! You are our lucky winner. Claim your reward now: http://scam-reward.com",
+    "label": "phishing"
+  },
+  {
+    "text": "Your subscription to our newsletter has been confirmed. Thank you for joining us!",
+    "label": "legit"
+  },
+  {
+    "text": "Your account has been flagged for suspicious activity. Please verify your identity: http://fake-verification.com",
+    "label": "phishing"
+  },
+  {
+    "text": "Your order #12345 has been shipped. Track your package here: http://legit-shipping.com",
+    "label": "legit"
+  },
+  {
+    "text": "We noticed a login attempt from an unrecognized device. Secure your account now: http://phishy-security.com",
+    "label": "phishing"
+  },
+  {
+    "text": "Your invoice for the recent purchase is attached. Thank you for shopping with us!",
+    "label": "legit"
+  },
+  {
+    "text": "Your Netflix account has been suspended. Update your payment details here: http://fake-netflix-login.com",
+    "label": "phishing"
+  },
+  {
+    "text": "Your Amazon order has been delivered. Check your order details here: http://legit-amazon.com",
+    "label": "legit"
+  },
+  {
+    "text": "Urgent: Your email account will be deactivated unless you verify it now: http://phishy-email.com",
+    "label": "phishing"
+  },
+  {
+    "text": "Your flight booking is confirmed. View your itinerary here: http://legit-airline.com",
+    "label": "legit"
+  },
+  {
+    "text": "You have a new voicemail. Listen to it here: http://phishy-voicemail.com",
+    "label": "phishing"
+  },
+  {
+    "text": "Your tax refund is ready. Claim it now: http://fake-tax-refund.com",
+    "label": "phishing"
+  },
+  {
+    "text": "Your meeting is scheduled for tomorrow at 10 AM. Join using the link: http://legit-meeting.com",
+    "label": "legit"
+  },
+  {
+    "text": "Your Apple ID has been locked. Unlock it here: http://fake-apple-login.com",
+    "label": "phishing"
+  },
+  {
+    "text": "Your payment for invoice #56789 has been received. Thank you!",
+    "label": "legit"
+  },
+  {
+    "text": "Your Dropbox account is almost full. Upgrade your storage here: http://phishy-dropbox.com",
+    "label": "phishing"
+  },
+  {
+    "text": "Your credit card has been charged $999.99. If this was not you, dispute the transaction here: http://fake-dispute.com",
+    "label": "phishing"
+  },
+  {
+    "text": "Your subscription to our premium service has been successfully renewed. Thank you for your continued support!",
+    "label": "legit"
+  },
+  {
+    "text": "Your account password has been reset. If you did not request this, secure your account here: http://phishy-reset.com",
+    "label": "phishing"
+  },
+  {
+    "text": "Your friend has shared a photo album with you. View it here: http://legit-photo-sharing.com",
+    "label": "legit"
+  },
+  {
+    "text": "Your bank account statement is ready. Download it securely from your online banking portal.",
+    "label": "legit"
+  },
+  {
+    "text": "Your social media account has been reported for suspicious activity. Verify your account here: http://fake-social-verification.com",
+    "label": "phishing"
+  },
+  {
+    "text": "Your order has been delayed due to unforeseen circumstances. We apologize for the inconvenience.",
+    "label": "legit"
+  },
+  {
+    "text": "Your antivirus subscription has expired. Renew now to stay protected: http://phishy-antivirus.com",
+    "label": "phishing"
+  },
+  {
+    "text": "Your recent login attempt was successful. If this was not you, please contact support immediately.",
+    "label": "legit"
+  },
+  {
+    "text": "Your mobile service will be disconnected unless you update your payment information: http://fake-mobile-payment.com",
+    "label": "phishing"
+  }
+]

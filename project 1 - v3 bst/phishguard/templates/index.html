@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PhishGuard - Email Phishing Detection</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+  <div class="container">
+    <h2>╰(..:: PhishGuard ::..)╯ </h2>
+    <h5>
+      --------------------------------------------------------------------------------------------------------------------
+    </h5>
+    <h3><br> ==> Can You Spot a Phish?</h3>
+    <div id="email-box">
+      <p id="email-content">Loading email...</p>
+    </div>
+    <div id="timer">Time left: 10s</div>
+    <div id="score">Score: 0/0</div>
+    <div class="buttons">
+      <button onclick="submitAnswer('phishing')">Phishing</button>
+      <button onclick="submitAnswer('legit')">Legitimate</button>
+    </div>
+    <div id="feedback"></div>
+    <div id="feedback-form">
+      <textarea id="feedback-text" placeholder="Provide your feedback here..."></textarea>
+      <button onclick="submitFeedback()">Submit Feedback</button>
+    </div>
+  </div>
+  <script src="/static/script.js"></script>
+</body>
+
+</html>
