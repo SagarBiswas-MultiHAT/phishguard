@@ -1,6 +1,6 @@
 # PhishGuard - Email Phishing Detection
 
-![PhishGuard Example](https://imgur.com/undefined.png)
+![PhishGuard Example](https://imgur.com/a/0W68I8I.png)
 
 
 PhishGuard is a web-based application designed to help users identify phishing emails. It provides a fun and interactive way to test your ability to distinguish between legitimate and phishing emails while also allowing users to provide feedback on the application.
