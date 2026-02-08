@@ -1,87 +1,133 @@
 # PhishGuard - Email Phishing Detection
 
-![PhishGuard Example](https://imgur.com/12pCm4r.png)
+PhishGuard is a training-focused phishing detection game. It serves realistic messages, scores your decisions, and captures feedback to improve the experience. There is also an AI Challenge mode that can generate fresh phishing/legitimate samples using Groq.
 
+## Why This Exists
 
-PhishGuard is a web-based application designed to help users identify phishing emails. It provides a fun and interactive way to test your ability to distinguish between legitimate and phishing emails while also allowing users to provide feedback on the application.
+Most phishing training is passive. PhishGuard makes it hands-on, time-boxed, and measurable so people build real instincts quickly.
 
 ## Features
 
-- **Interactive Email Detection**: Users are presented with emails and must decide whether they are legitimate or phishing.
-- **Timer-Based Gameplay**: Each email must be classified within a 10-second timer.
-- **Score Tracking**: Tracks the user's score and total attempts.
-- **Feedback Submission**: Users can submit feedback to improve the application.
+- **Interactive classification** with a 10-second timer per message.
+- **Score + attempts tracking** to measure progress.
+- **AI Challenge mode** to generate new samples on demand.
+- **Feedback capture** stored locally as JSON.
+- **Safety checks** on payload size and input validation.
 
 ## Project Structure
 
 ```
-project 1/
-├── app.py                     # Flask application backend
-├── phishing_data.json         # Dataset of emails for phishing detection
-├── FeedBack/                  # Folder to store user feedback
-├── phishguard/
-│   ├── static/
-│   │   ├── script.js          # Frontend JavaScript logic
-│   │   ├── style.css          # Styling for the application
-│   ├── templates/
-│       ├── index.html         # Main HTML template
+phishguard/
+├── app.py
+├── phishing_data.json
+├── requirements.txt
+├── requirements-dev.txt
+├── requirements-ai.txt
+├── templates/
+│   └── index.html
+├── static/
+│   ├── script.js
+│   └── style.css
+├── tests/
+│   └── test_app.py
+└── .github/
+    └── workflows/
+        └── python-ci.yml
 ```
 
-## Prerequisites
+## Quick Start
 
-- Python 3.7 or higher
-- Flask library
+### 1) Install dependencies
 
-## Installation
+```bash
+python -m venv .venv
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+```
 
-1. Clone the repository:
-   ```bash
-   git clone <repository-url>
-   ```
+### 2) Run the app
 
-2. Navigate to the project directory:
-   ```bash
-   cd project 1
-   ```
+```bash
+python app.py
+```
 
-3. Install the required Python packages:
-   ```bash
-   pip install flask
-   ```
+Open the browser at:
 
-## Usage
+```
+http://127.0.0.1:5000/
+```
 
-1. Start the Flask server:
-   ```bash
-   python app.py
-   ```
+## AI Challenge Setup (Optional)
 
-2. Open your web browser and navigate to:
-   ```
-   http://127.0.0.1:5000/
-   ```
+Install Groq SDK:
 
-3. Interact with the application to classify emails as phishing or legitimate.
+```bash
+pip install -r requirements-ai.txt
+```
+
+Set your API key:
+
+```bash
+$env:GROQ_API_KEY="your-key"  # PowerShell
+```
+
+AI Challenge is triggered from the UI and saves new samples into phishing_data.json.
 
 ## API Endpoints
 
-- `GET /`: Renders the main application page.
-- `GET /get-email`: Fetches a random email from the dataset.
-- `POST /submit-feedback`: Submits user feedback.
+- `GET /` - Serve the UI
+- `GET /get-email` - Fetch a random message
+- `GET /get-email?source=ai` - Generate and store an AI message
+- `POST /submit-feedback` - Store feedback as JSON
+- `GET /health` - Basic health check
+
+## Configuration
+
+Environment variables (all optional):
+
+- `PHISHGUARD_DATA_PATH` - Path to phishing_data.json
+- `PHISHGUARD_FEEDBACK_DIR` - Folder for feedback JSON
+- `PHISHGUARD_MAX_FEEDBACK` - Max feedback length (default 1000)
+- `PHISHGUARD_MAX_EMAIL` - Max AI email length (default 600)
+- `PHISHGUARD_MAX_DATASET` - Max stored emails (default 2000)
+- `PHISHGUARD_MIN_AI_INTERVAL` - Min seconds between AI requests per IP (default 1.5)
+- `PHISHGUARD_MIN_FEEDBACK_INTERVAL` - Min seconds between feedback submissions per IP (default 2.0)
+- `PHISHGUARD_HOST` - Bind host (default 127.0.0.1)
+- `PHISHGUARD_PORT` - Bind port (default 5000)
+- `FLASK_DEBUG` - Set to 1 for debug mode
+
+## Testing
+
+```bash
+pip install -r requirements-dev.txt
+pytest
+```
+
+## Dataset Notes
+
+phishing_data.json is a simple list of objects:
+
+```json
+{
+  "text": "Your account needs verification...",
+  "label": "phishing"
+}
+```
 
 ## Feedback Storage
 
-User feedback is stored in the `FeedBack/` directory as JSON files, with each file named using a timestamp.
+Feedback is stored locally in the folder defined by `PHISHGUARD_FEEDBACK_DIR` (defaults to FeedBack/). Each file is timestamped and contains the feedback text plus a creation time.
 
-## Dataset
+## Security Considerations
 
-The `phishing_data.json` file contains a collection of emails labeled as either "phishing" or "legit". This dataset is used to present emails to the user for classification.
+- API keys are never stored in the repo.
+- Input length is bounded to reduce abuse.
+- AI output is validated before storage.
 
 ## Contributing
 
-Contributions are welcome! If you have suggestions for improvements or new features, feel free to open an issue or submit a pull request.
+Issues and pull requests are welcome. If you add new scenarios or UI ideas, please include a short explanation of the learning goal.
 
-## Acknowledgments
+## License
 
-- Inspired by the need to raise awareness about phishing attacks.
-- Special thanks to all contributors and testers.
+MIT License.

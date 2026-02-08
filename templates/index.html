@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PhishGuard - Email Phishing Detection</title>
+    <link rel="stylesheet" href="/static/style.css" />
+</head>
+
+<body>
+    <main class="shell">
+        <header class="hero">
+            <span class="badge">Live Training</span>
+            <h1>PhishGuard</h1>
+            <p>
+                Train your phishing radar with realistic scenarios. Trust your instincts,
+                verify the signals, and build safer habits in under a minute.
+            </p>
+        </header>
+
+        <section class="board">
+            <div class="stats">
+                <div class="stat">
+                    <span id="timer-value">10s</span>
+                    <small>Time Left</small>
+                </div>
+                <div class="stat">
+                    <span id="score-value">0</span>
+                    <small>Correct</small>
+                </div>
+                <div class="stat">
+                    <span id="attempts-value">0</span>
+                    <small>Attempts</small>
+                </div>
+            </div>
+
+            <div class="email-card" id="email-box">
+                <p id="email-content">Loading your first message...</p>
+            </div>
+
+            <div class="actions">
+                <button class="button primary" id="phishing-button" type="button">Phishing</button>
+                <button class="button secondary" id="legit-button" type="button">Legitimate</button>
+                <button class="button ghost" id="pause-button" type="button">Pause Timer</button>
+            </div>
+
+            <div class="status" id="status" aria-live="polite">
+                Make your call: phishing or legitimate?
+            </div>
+
+            <form class="feedback" id="feedback-form">
+                <label for="feedback-text">Share feedback or suggestions</label>
+                <textarea id="feedback-text" name="feedback" maxlength="300"
+                    placeholder="Tell us what felt realistic, confusing, or helpful..."></textarea>
+                <div class="meta">
+                    <span id="feedback-counter">0 / 300</span>
+                    <button class="button ghost" id="feedback-submit" type="submit">Send Feedback</button>
+                </div>
+            </form>
+        </section>
+
+        <div class="footer-note">Built for safer inbox instincts. No emails are sent or stored.</div>
+    </main>
+    <script src="/static/script.js"></script>
+</body>
+
+</html>
