@@ -1,6 +1,53 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "todo-app"
+version = "1.0.0"
+description = "A production-ready Tkinter To-Do app."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+    { name = "Todo App Contributors" }
+]
+dependencies = []
+
+[project.optional-dependencies]
+encrypt = ["cryptography>=42"]
+
+[project.scripts]
+todo-app = "todo_app.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["todo_app*"]
+
+[tool.black]
+line-length = 88
+target-version = ["py311"]
+
+[tool.isort]
+profile = "black"
+known_first_party = ["todo_app"]
+
 [tool.ruff]
-line-length = 100
+line-length = 88
 target-version = "py311"
 
 [tool.ruff.lint]
-select = ["E", "F", "I", "B", "UP"]
+select = ["E", "F", "I", "B", "UP", "SIM"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["todo_app"]
+
+[tool.mypy]
+python_version = "3.11"
+files = ["todo_app"]
+warn_unused_configs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+no_implicit_optional = true
+check_untyped_defs = true
+disallow_untyped_defs = true

@@ -1,133 +1,206 @@
-# PhishGuard - Email Phishing Detection
 
-PhishGuard is a training-focused phishing detection game. It serves realistic messages, scores your decisions, and captures feedback to improve the experience. There is also an AI Challenge mode that can generate fresh phishing/legitimate samples using Groq.
+# To-Do List App
 
-## Why This Exists
-
-Most phishing training is passive. PhishGuard makes it hands-on, time-boxed, and measurable so people build real instincts quickly.
+A production-ready, offline-first To-Do List application built with Python and Tkinter. It ships with a clean UI, structured storage backends, optional encryption, robust logging, and full developer tooling.
 
 ## Features
 
-- **Interactive classification** with a 10-second timer per message.
-- **Score + attempts tracking** to measure progress.
-- **AI Challenge mode** to generate new samples on demand.
-- **Feedback capture** stored locally as JSON.
-- **Safety checks** on payload size and input validation.
+- Tkinter UI with search/filter, keyboard shortcuts, import/export, and undo.
+- Storage backends: filesystem (text), SQLite, and optional encrypted file storage.
+- Atomic saves with backup rotation and rotating logs.
+- Headless CLI for exports and automated backups.
+- Tested, linted, typed, and ready for packaging.
 
-## Project Structure
+## Requirements
 
-```
-phishguard/
-├── app.py
-├── phishing_data.json
-├── requirements.txt
-├── requirements-dev.txt
-├── requirements-ai.txt
-├── templates/
-│   └── index.html
-├── static/
-│   ├── script.js
-│   └── style.css
-├── tests/
-│   └── test_app.py
-└── .github/
-    └── workflows/
-        └── python-ci.yml
+- Python 3.11+ (3.10 supported where feasible)
+- Tkinter (bundled with standard Python installers)
+
+## Installation
+
+Clone the repository and install dev tools when needed:
+
+```bash
+git clone https://github.com/SagarBiswas-MultiHAT/todo-list-app.git
+cd todo-list-app
 ```
 
 ## Quick Start
 
-### 1) Install dependencies
+Run the UI directly:
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate  # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
+python -m todo_app
 ```
 
-### 2) Run the app
+Or use the CLI entry point:
 
 ```bash
-python app.py
+todo-app ui
 ```
 
-Open the browser at:
+## CLI Installation
 
-```
-http://127.0.0.1:5000/
-```
-
-## AI Challenge Setup (Optional)
-
-Install Groq SDK:
+Installing the package into your active environment registers the `todo-app` console script:
 
 ```bash
-pip install -r requirements-ai.txt
+pip install -e .
 ```
 
-Set your API key:
+If you prefer not to install the project you can continue to run the commands via `python -m todo_app` as shown above.
+
+### Keyboard Shortcuts
+
+- `Ctrl+N`: add task
+- `Del`: remove selected task
+- `Ctrl+F`: focus search field
+- `Ctrl+I`: import JSON
+- `Ctrl+E`: export JSON
+- `Ctrl+Shift+I`: import CSV
+- `Ctrl+Shift+E`: export CSV
+
+## CLI Usage
 
 ```bash
-$env:GROQ_API_KEY="your-key"  # PowerShell
+todo-app --storage fs ui
+todo-app --storage sqlite ui
+todo-app --storage encrypted --password "your password" ui
 ```
 
-AI Challenge is triggered from the UI and saves new samples into phishing_data.json.
+Headless export:
 
-## API Endpoints
+```bash
+todo-app export --format json --output backups/tasks.json
+todo-app export --format csv --output backups/tasks.csv
+```
 
-- `GET /` - Serve the UI
-- `GET /get-email` - Fetch a random message
-- `GET /get-email?source=ai` - Generate and store an AI message
-- `POST /submit-feedback` - Store feedback as JSON
-- `GET /health` - Basic health check
+Automated backup (JSON):
 
-## Configuration
+```bash
+todo-app backup --output backups/tasks-$(date +%Y%m%d).json
+```
 
-Environment variables (all optional):
+## Storage Options
 
-- `PHISHGUARD_DATA_PATH` - Path to phishing_data.json
-- `PHISHGUARD_FEEDBACK_DIR` - Folder for feedback JSON
-- `PHISHGUARD_MAX_FEEDBACK` - Max feedback length (default 1000)
-- `PHISHGUARD_MAX_EMAIL` - Max AI email length (default 600)
-- `PHISHGUARD_MAX_DATASET` - Max stored emails (default 2000)
-- `PHISHGUARD_MIN_AI_INTERVAL` - Min seconds between AI requests per IP (default 1.5)
-- `PHISHGUARD_MIN_FEEDBACK_INTERVAL` - Min seconds between feedback submissions per IP (default 2.0)
-- `PHISHGUARD_HOST` - Bind host (default 127.0.0.1)
-- `PHISHGUARD_PORT` - Bind port (default 5000)
-- `FLASK_DEBUG` - Set to 1 for debug mode
+The data directory defaults to an OS-appropriate location.
 
-## Testing
+- Windows: `%APPDATA%\todo-app`
+- macOS/Linux: `$XDG_DATA_HOME/todo-app` or `~/.local/share/todo-app`
+
+Override with:
+
+```bash
+todo-app --data-dir /path/to/data ui
+```
+
+## Encrypted Storage
+
+Encrypted storage uses a password-derived key (PBKDF2-HMAC-SHA256 with a per-file salt).
+
+Install encryption extras:
+
+```bash
+pip install .[encrypt]
+```
+
+Run with:
+
+```bash
+todo-app --storage encrypted --password "your password" ui
+```
+
+If you omit `--password` when launching the UI, a GUI prompt will ask for it.
+
+### Private Tasks
+
+Use the **Private Tasks** menu in the UI to open a separate encrypted task list.
+
+- **Open Private Tasks**: prompts for the password and opens the private list.
+- **New Private Task**: opens the private list and focuses the task entry.
+
+If `cryptography` is missing, the app will prompt you to install it. The password is never stored.
+
+## Import/Export
+
+Use the File menu in the UI to import or export tasks to JSON or CSV. The CLI provides headless exports for automation.
+
+## Logging
+
+Rotating logs are stored in the user config directory:
+
+- Windows: `%APPDATA%\todo-app\todo-app.log`
+- macOS/Linux: `$XDG_CONFIG_HOME/todo-app/todo-app.log` or `~/.config/todo-app/todo-app.log`
+
+## Development
+
+Install dev dependencies:
 
 ```bash
 pip install -r requirements-dev.txt
-pytest
 ```
 
-## Dataset Notes
+Run linting, type checks, and tests:
 
-phishing_data.json is a simple list of objects:
-
-```json
-{
-  "text": "Your account needs verification...",
-  "label": "phishing"
-}
+```bash
+ruff check .
+black --check .
+mypy todo_app
+pytest --maxfail=1 --disable-warnings -q --cov=todo_app
 ```
 
-## Feedback Storage
+> When working from Windows, run the repo-installed linter so the options and version match CI.
+>
+> ```powershell
+> .\.venv\Scripts\python.exe -m ruff check .
+> ```
+>
+> Or activate the virtual environment first and run `ruff check .` directly.
 
-Feedback is stored locally in the folder defined by `PHISHGUARD_FEEDBACK_DIR` (defaults to FeedBack/). Each file is timestamped and contains the feedback text plus a creation time.
+Run CI locally with tox:
 
-## Security Considerations
+```bash
+tox
+```
 
-- API keys are never stored in the repo.
-- Input length is bounded to reduce abuse.
-- AI output is validated before storage.
+## Packaging
+
+Install the build tooling before running any packaging commands:
+
+```bash
+pip install build pyinstaller
+```
+
+Build a wheel:
+
+```bash
+python -m build
+```
+
+### PyInstaller (rebuild the executable)
+
+```bash
+pyinstaller --onefile --noconsole --name todo-app todo_app/__main__.py
+```
+
+### One-click Launch
+
+- `run_todo_app.bat` (on Windows) calls `python -m todo_app` and lives at the repo root for double-click launches.
+- Use `todo-app.spec` with PyInstaller to emit `dist/todo-app.exe` for a fully packaged experience:
+	```bash
+	pyinstaller todo-app.spec
+	```
+	The bundled executable appears in the `dist/` directory and can be copied alongside the shared config/storage directory. (.\dist\todo-app.exe)
+
+## Troubleshooting
+
+- **UI does not open**: ensure Tkinter is installed with your Python distribution.
+- **Encrypted storage error**: install `cryptography` and confirm the password.
+- **Permission errors**: choose a custom `--data-dir` with write access.
+
+## Security
+
+See [SECURITY.md](SECURITY.md) for the threat model and secure defaults.
 
 ## Contributing
 
-Issues and pull requests are welcome. If you add new scenarios or UI ideas, please include a short explanation of the learning goal.
-
-## License
-
-MIT License.
+See [CONTRIBUTING.md](CONTRIBUTING.md).
