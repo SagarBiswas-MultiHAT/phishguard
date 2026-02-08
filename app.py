@@ -140,8 +140,8 @@ def create_app():
                 break
             time.sleep(0.4)
         if not email:
-                if emails:
-                    return jsonify(random.choice(emails))
+            if emails:
+                return jsonify(random.choice(emails))
             return json_error(last_error or "AI service error.", 503)
         with email_lock:
             if len(emails) >= max_dataset_size:
