@@ -50,13 +50,14 @@ def generate_ai_email(max_length):
 
     client = Groq(api_key=api_key)
     desired_label = random.choice(["phishing", "legit"])
-    prompt = (
-        "Generate one professional, clever, and tricky email or message for a phishing awareness "
-        "quiz. It must feel like a real-world workplace or consumer scenario (1-2 sentences). "
-        "Return a JSON object with keys 'text' and 'label'. "
-        f"The label must be exactly '{desired_label}'. "
-        "No markdown, no extra keys."
-    )
+    prompt_parts = [
+        "Generate one professional, clever, and tricky email or message for a phishing quiz.",
+        "It must feel like a real-world workplace or consumer scenario (1-2 sentences).",
+        "Return a JSON object with keys 'text' and 'label'.",
+        f"The label must be exactly '{desired_label}'.",
+        "No markdown, no extra keys.",
+    ]
+    prompt = " ".join(prompt_parts)
     try:
         completion = client.chat.completions.create(
             model="llama-3.1-8b-instant",
@@ -93,14 +94,8 @@ def create_app():
     app = Flask(__name__, template_folder="templates", static_folder="static")
 
     current_dir = os.path.dirname(os.path.abspath(__file__))
-    data_path = os.getenv(
-        "PHISHGUARD_DATA_PATH",
-        os.path.join(current_dir, "phishing_data.json"),
-    )
-    feedback_dir = os.getenv(
-        "PHISHGUARD_FEEDBACK_DIR",
-        os.path.join(current_dir, "FeedBack"),
-    )
+    data_path = os.getenv("PHISHGUARD_DATA_PATH", os.path.join(current_dir, "phishing_data.json"))
+    feedback_dir = os.getenv("PHISHGUARD_FEEDBACK_DIR", os.path.join(current_dir, "FeedBack"))
     max_feedback_length = int(os.getenv("PHISHGUARD_MAX_FEEDBACK", DEFAULT_MAX_FEEDBACK_LENGTH))
     max_email_length = int(os.getenv("PHISHGUARD_MAX_EMAIL", DEFAULT_MAX_EMAIL_LENGTH))
     max_dataset_size = int(os.getenv("PHISHGUARD_MAX_DATASET", DEFAULT_MAX_DATASET_SIZE))
