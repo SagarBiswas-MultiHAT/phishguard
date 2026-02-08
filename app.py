@@ -40,7 +40,7 @@ def json_error(message, status=400):
     return jsonify({"error": message}), status
 
 
-def generate_ai_email(max_length):
+def generate_ai_email(max_length, desired_label, max_attempts=3):
     if Groq is None:
         return None, "Groq library is not installed. Run: pip install -r requirements-ai.txt"
 
@@ -49,7 +49,6 @@ def generate_ai_email(max_length):
         return None, "Missing GROQ_API_KEY environment variable."
 
     client = Groq(api_key=api_key)
-    desired_label = random.choice(["phishing", "legit"])
     prompt_parts = [
         "Generate one professional, clever, and tricky email or message for a phishing quiz.",
         "It must feel like a real-world workplace or consumer scenario (1-2 sentences).",
@@ -58,36 +57,42 @@ def generate_ai_email(max_length):
         "No markdown, no extra keys.",
     ]
     prompt = " ".join(prompt_parts)
-    try:
-        completion = client.chat.completions.create(
-            model="llama-3.1-8b-instant",
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0.9,
-            max_completion_tokens=256,
-            top_p=1,
-            stream=False,
-        )
-    except Exception as exc:
-        return None, f"AI service error: {exc}"
 
-    raw_text = completion.choices[0].message.content if completion.choices else ""
-    match = re.search(r"\{.*\}", raw_text, re.DOTALL)
-    if not match:
-        return None, "AI response did not contain valid JSON."
-    try:
-        email = json.loads(match.group(0))
-    except json.JSONDecodeError:
-        return None, "AI response JSON could not be parsed."
+    for _attempt in range(max_attempts):
+        try:
+            completion = client.chat.completions.create(
+                model="llama-3.1-8b-instant",
+                messages=[{"role": "user", "content": prompt}],
+                temperature=0.7,
+                max_completion_tokens=256,
+                top_p=1,
+                stream=False,
+            )
+        except Exception as exc:
+            return None, f"AI service error: {exc}"
 
-    if not isinstance(email, dict):
-        return None, "AI response JSON must be an object."
-    text = email.get("text", "").strip()
-    label = email.get("label", "").strip().lower()
-    if not text or label not in {"phishing", "legit"}:
-        return None, "AI response JSON missing required fields."
-    if len(text) > max_length:
-        return None, "AI response email text is too long."
-    return {"text": text, "label": label}, None
+        raw_text = completion.choices[0].message.content if completion.choices else ""
+        match = re.search(r"\{.*\}", raw_text, re.DOTALL)
+        if not match:
+            continue
+        try:
+            email = json.loads(match.group(0))
+        except json.JSONDecodeError:
+            continue
+
+        if not isinstance(email, dict):
+            continue
+        text = email.get("text", "").strip()
+        label = email.get("label", "").strip().lower()
+        if not text or label not in {"phishing", "legit"}:
+            continue
+        if label != desired_label:
+            continue
+        if len(text) > max_length:
+            continue
+        return {"text": text, "label": label}, None
+
+    return None, "AI response did not meet requirements."
 
 
 def create_app():
@@ -132,16 +137,17 @@ def create_app():
 
     @app.get("/get-email")
     def get_email():
+        desired_label = random.choice(["phishing", "legit"])
         email = None
         last_error = None
         for _attempt in range(2):
-            email, last_error = generate_ai_email(max_email_length)
+            email, last_error = generate_ai_email(max_email_length, desired_label)
             if email:
                 break
             time.sleep(0.4)
         if not email:
-                if emails:
-                    return jsonify(random.choice(emails))
+            if emails:
+                return jsonify(random.choice(emails))
             return json_error(last_error or "AI service error.", 503)
         with email_lock:
             if len(emails) >= max_dataset_size:

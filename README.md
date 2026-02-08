@@ -23,106 +23,131 @@ phishguard/
 ├── requirements.txt
 ├── requirements-dev.txt
 ├── requirements-ai.txt
-├── templates/
-│   └── index.html
+# PhishGuard
+
+PhishGuard is a fast, game-like phishing awareness trainer. It serves one short message at a time, asks the user to decide whether it is phishing or legitimate, and tracks score in real time. The project is intentionally lightweight so it can run locally, in workshops, or as a demo for security awareness.
+
+## Why this exists
+
+Phishing is still the easiest way to get into most organizations. PhishGuard turns common phishing patterns into quick, repeatable practice that helps people build stronger instincts without needing a large training platform.
+
+## What you get
+
+- **AI-generated scenarios**: Fresh, realistic messages crafted by an LLM.
+- **Balanced labels**: Each round randomly chooses whether the next message is phishing or legitimate.
+- **Strict validation**: The app only accepts AI responses that match the requested label and valid JSON shape.
+- **Timer and scoring**: Ten-second countdown with score and attempt tracking.
+- **Pause control**: Users can pause and resume the timer during a round.
+- **Feedback capture**: Short feedback is saved locally for later review.
+- **Dataset growth**: Accepted AI messages are appended to `phishing_data.json` for future exploration.
+
+## How it works
+
+1. The frontend calls `GET /get-email`.
+2. The backend requests a new message from Groq with a randomly chosen label (phishing or legit).
+3. The response is validated for structure and label accuracy.
+4. The message is returned to the browser and appended to `phishing_data.json`.
+
+If the AI response fails validation after retries, the backend falls back to a stored message (if available). This keeps the quiz responsive while preserving label accuracy.
+
+## Project structure
+
+```
+phishguard/
+├── app.py                 # Flask backend
+├── phishing_data.json     # Dataset of labeled messages
+├── FeedBack/              # Saved feedback submissions
 ├── static/
-│   ├── script.js
-│   └── style.css
-├── tests/
-│   └── test_app.py
-└── .github/
-    └── workflows/
-        └── python-ci.yml
+│   ├── script.js          # Frontend behavior
+│   └── style.css          # UI styling
+├── templates/
+│   └── index.html         # Main UI template
+├── tests/                 # Pytest suite
+└── README.md
 ```
 
-## Quick Start
+## Requirements
 
-### 1) Install dependencies
+- Python 3.11+ recommended (3.8+ should work for Flask)
+- Groq API key for AI generation
 
-```bash
+Python packages:
+
+- `Flask`
+- `groq`
+
+## Setup
+
+Create and activate a virtual environment, then install dependencies:
+
+```powershell
 python -m venv .venv
-source .venv/bin/activate  # Windows: .venv\Scripts\activate
+& ".venv/Scripts/Activate.ps1"
 pip install -r requirements.txt
-```
-
-### 2) Run the app
-
-```bash
-python app.py
-```
-
-Open the browser at:
-
-```
-http://127.0.0.1:5000/
-```
-
-## AI Challenge Setup (Optional)
-
-Install Groq SDK:
-
-```bash
 pip install -r requirements-ai.txt
 ```
 
-Set your API key:
+Set the Groq API key (PowerShell):
 
-```bash
-$env:GROQ_API_KEY="your-key"  # PowerShell
+```powershell
+$env:GROQ_API_KEY = "your_api_key_here"
 ```
 
-AI Challenge is triggered from the UI and saves new samples into phishing_data.json.
+## Run the app
 
-## API Endpoints
+```powershell
+python app.py
+```
 
-- `GET /` - Serve the UI
-- `GET /get-email` - Fetch a random message
-- `GET /get-email?source=ai` - Generate and store an AI message
-- `POST /submit-feedback` - Store feedback as JSON
-- `GET /health` - Basic health check
+Open:
+
+```
+http://127.0.0.1:5000
+```
+
+## API endpoints
+
+- `GET /` renders the UI.
+- `GET /get-email` returns a newly generated message.
+- `POST /submit-feedback` stores feedback locally.
+- `GET /health` provides a simple health check.
 
 ## Configuration
 
-Environment variables (all optional):
+Optional environment variables:
 
-- `PHISHGUARD_DATA_PATH` - Path to phishing_data.json
-- `PHISHGUARD_FEEDBACK_DIR` - Folder for feedback JSON
-- `PHISHGUARD_MAX_FEEDBACK` - Max feedback length (default 1000)
-- `PHISHGUARD_MAX_EMAIL` - Max AI email length (default 600)
-- `PHISHGUARD_MAX_DATASET` - Max stored emails (default 2000)
-- `PHISHGUARD_MIN_AI_INTERVAL` - Min seconds between AI requests per IP (default 1.5)
-- `PHISHGUARD_MIN_FEEDBACK_INTERVAL` - Min seconds between feedback submissions per IP (default 2.0)
-- `PHISHGUARD_HOST` - Bind host (default 127.0.0.1)
-- `PHISHGUARD_PORT` - Bind port (default 5000)
-- `FLASK_DEBUG` - Set to 1 for debug mode
+- `PHISHGUARD_DATA_PATH` (default: `phishing_data.json`)
+- `PHISHGUARD_FEEDBACK_DIR` (default: `FeedBack/`)
+- `PHISHGUARD_MAX_EMAIL` (default: `600` characters)
+- `PHISHGUARD_MAX_DATASET` (default: `2000` entries)
+- `PHISHGUARD_MAX_FEEDBACK` (default: `1000` characters)
+- `PHISHGUARD_MIN_FEEDBACK_INTERVAL` (default: `2.0` seconds)
 
-## Testing
+## Accuracy notes
 
-```bash
-pip install -r requirements-dev.txt
+PhishGuard does not guess or classify on its own. The quiz is accurate because:
+
+- The backend requests a specific label on every AI generation.
+- AI responses are rejected unless the label exactly matches the request.
+- Stored dataset entries preserve their labels exactly as saved.
+
+This ensures the correct answer in the quiz always matches the displayed label.
+
+## Troubleshooting
+
+- **500/503 on `/get-email`**: Check `GROQ_API_KEY` and network access.
+- **ModuleNotFoundError**: Activate the venv and install requirements.
+- **CI failures**: Run `ruff check .` and `pytest` locally.
+
+## Tests
+
+```powershell
 pytest
 ```
 
-## Dataset Notes
+## License
 
-phishing_data.json is a simple list of objects:
-
-```json
-{
-  "text": "Your account needs verification...",
-  "label": "phishing"
-}
-```
-
-## Feedback Storage
-
-Feedback is stored locally in the folder defined by `PHISHGUARD_FEEDBACK_DIR` (defaults to FeedBack/). Each file is timestamped and contains the feedback text plus a creation time.
-
-## Security Considerations
-
-- API keys are never stored in the repo.
-- Input length is bounded to reduce abuse.
-- AI output is validated before storage.
+MIT
 
 ## Contributing
 
