@@ -762,5 +762,13 @@
   {
     "text": "Dear [Username], your account has been compromised and we're requiring you to reset your password immediately. Please click on the link below to secure your account: https://secure-login-system.com/reset-password",
     "label": "phishing"
+  },
+  {
+    "text": "Dear valued team member, we've recently updated our secure portal to enhance user experience, please click this link to validate your account and complete a mandatory security quiz.",
+    "label": "phishing"
+  },
+  {
+    "text": "The IT department has received a report of a potential security breach and needs your assistance to verify your account credentials by clicking on this link to ensure compliance with our company's data protection policies.",
+    "label": "phishing"
   }
 ]

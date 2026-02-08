@@ -1,8 +1,8 @@
 from flask import Flask, jsonify, render_template, request
 import json
 import os
-import random
 import re
+import random
 import threading
 import time
 
@@ -14,13 +14,12 @@ except Exception:
 DEFAULT_MAX_FEEDBACK_LENGTH = 1000
 DEFAULT_MAX_EMAIL_LENGTH = 600
 DEFAULT_MAX_DATASET_SIZE = 2000
-DEFAULT_MIN_AI_INTERVAL = 1.5
 DEFAULT_MIN_FEEDBACK_INTERVAL = 2.0
 
 
 def load_emails(data_path):
     try:
-        with open(data_path, "r", encoding="utf-8") as handle:
+        with open(data_path, encoding="utf-8") as handle:
             data = json.load(handle)
             return data if isinstance(data, list) else []
     except FileNotFoundError:
@@ -51,11 +50,11 @@ def generate_ai_email(max_length):
     client = Groq(api_key=api_key)
     desired_label = random.choice(["phishing", "legit"])
     prompt = (
-        "Generate one professional, clever, and tricky email or message for a phishing awareness quiz. "
-        "It must feel like a real-world workplace or consumer scenario (1-2 sentences). "
-        "Return a JSON object with keys 'text' and 'label'. "
-        f"The label must be exactly '{desired_label}'. "
-        "No markdown, no extra keys."
+        "Generate one professional, clever, and tricky email or message for a phishing awareness quiz."
+        " It must feel like a real-world workplace or consumer scenario (1-2 sentences)."
+        " Return a JSON object with keys 'text' and 'label'."
+        f" The label must be exactly '{desired_label}'."
+        " No markdown, no extra keys."
     )
     try:
         completion = client.chat.completions.create(
@@ -98,7 +97,6 @@ def create_app():
     max_feedback_length = int(os.getenv("PHISHGUARD_MAX_FEEDBACK", DEFAULT_MAX_FEEDBACK_LENGTH))
     max_email_length = int(os.getenv("PHISHGUARD_MAX_EMAIL", DEFAULT_MAX_EMAIL_LENGTH))
     max_dataset_size = int(os.getenv("PHISHGUARD_MAX_DATASET", DEFAULT_MAX_DATASET_SIZE))
-    min_ai_interval = float(os.getenv("PHISHGUARD_MIN_AI_INTERVAL", DEFAULT_MIN_AI_INTERVAL))
     min_feedback_interval = float(
         os.getenv("PHISHGUARD_MIN_FEEDBACK_INTERVAL", DEFAULT_MIN_FEEDBACK_INTERVAL)
     )
@@ -134,7 +132,7 @@ def create_app():
     def get_email():
         email = None
         last_error = None
-        for attempt in range(2):
+        for _attempt in range(2):
             email, last_error = generate_ai_email(max_email_length)
             if email:
                 break
