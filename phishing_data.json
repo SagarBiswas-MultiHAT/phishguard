@@ -770,5 +770,9 @@
   {
     "text": "The IT department has received a report of a potential security breach and needs your assistance to verify your account credentials by clicking on this link to ensure compliance with our company's data protection policies.",
     "label": "phishing"
+  },
+  {
+    "text": "Hello, your account credentials are required to be updated within the next 24 hours. Please click this secure link to access the update portal: https://secure-login-portal.com/update",
+    "label": "legit"
   }
 ]
