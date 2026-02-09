@@ -1,8 +1,8 @@
-name: Python CI
+name: Get started with GitHub Actions
 
 on:
   push:
-    branches: ["**"]
+    branches: [ main, master ]
   pull_request:
 
 jobs:
@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -23,7 +25,9 @@ jobs:
           pip install -r requirements.txt -r requirements-dev.txt
 
       - name: Lint
-        run: ruff check .
+        run: |
+          ruff check .
 
       - name: Test
-        run: pytest
+        run: |
+          pytest

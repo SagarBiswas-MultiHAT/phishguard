@@ -1,6 +1,6 @@
 # PhishGuard - Email Phishing Detection
 
-[![CI](https://github.com/SagarBiswas-MultiHAT/PhishGuardPlayground/actions/workflows/ci.yml/badge.svg)](https://github.com/SagarBiswas-MultiHAT/PhishGuardPlayground/actions)
+[![Get started with GitHub Actions](https://github.com/SagarBiswas-MultiHAT/PhishGuardPlayground/actions/workflows/get-started-with-github-actions.yml/badge.svg)](https://github.com/SagarBiswas-MultiHAT/PhishGuardPlayground/actions/workflows/get-started-with-github-actions.yml)
 [![Python](https://img.shields.io/badge/python-3.11-blue)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
