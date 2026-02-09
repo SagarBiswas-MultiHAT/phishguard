@@ -1,14 +1,22 @@
+
+
+
+
+
+## Project Structure
+
+```
+phishguard/
+├── app.py
+├── phishing_data.json
+├── requirements.txt
+├── requirements-dev.txt
+├── requirements-ai.txt
+```
+
 # PhishGuard - Email Phishing Detection
 
-[![Get started with GitHub Actions](https://github.com/SagarBiswas-MultiHAT/PhishGuardPlayground/actions/workflows/get-started-with-github-actions.yml/badge.svg)](https://github.com/SagarBiswas-MultiHAT/PhishGuardPlayground/actions/workflows/get-started-with-github-actions.yml)
-[![Python](https://img.shields.io/badge/python-3.11-blue)](https://www.python.org/)
-[![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
-
-PhishGuard is a training-focused phishing detection game. It serves realistic messages, scores your decisions, and captures feedback to improve the experience. There is also an AI Challenge mode that can generate fresh phishing/legitimate samples using Groq.
-
-## Why This Exists
-
-Most phishing training is passive. PhishGuard makes it hands-on, time-boxed, and measurable so people build real instincts quickly.
+PhishGuard is a fast, game-like phishing awareness trainer. It serves one short message at a time, asks the user to decide whether it is phishing or legitimate, and tracks score in real time. The project is intentionally lightweight so it can run locally, in workshops, or as a demo for security awareness.
 
 ---
 
@@ -23,19 +31,6 @@ Most phishing training is passive. PhishGuard makes it hands-on, time-boxed, and
 - **AI Challenge mode** to generate new samples on demand.
 - **Feedback capture** stored locally as JSON.
 - **Safety checks** on payload size and input validation.
-
-## Project Structure
-
-```
-phishguard/
-├── app.py
-├── phishing_data.json
-├── requirements.txt
-├── requirements-dev.txt
-├── requirements-ai.txt
-# PhishGuard
-
-PhishGuard is a fast, game-like phishing awareness trainer. It serves one short message at a time, asks the user to decide whether it is phishing or legitimate, and tracks score in real time. The project is intentionally lightweight so it can run locally, in workshops, or as a demo for security awareness.
 
 ## Why this exists
 
