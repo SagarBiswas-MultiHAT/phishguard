@@ -1,10 +1,20 @@
 # PhishGuard - Email Phishing Detection
 
+[![CI](https://github.com/SagarBiswas-MultiHAT/PhishGuardPlayground/actions/workflows/ci.yml/badge.svg)](https://github.com/SagarBiswas-MultiHAT/PhishGuardPlayground/actions)
+[![Python](https://img.shields.io/badge/python-3.11-blue)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+
 PhishGuard is a training-focused phishing detection game. It serves realistic messages, scores your decisions, and captures feedback to improve the experience. There is also an AI Challenge mode that can generate fresh phishing/legitimate samples using Groq.
 
 ## Why This Exists
 
 Most phishing training is passive. PhishGuard makes it hands-on, time-boxed, and measurable so people build real instincts quickly.
+
+---
+
+![photo](https://imgur.com/MttZMLQ.png)
+
+---
 
 ## Features
 
