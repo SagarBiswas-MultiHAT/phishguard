@@ -2,7 +2,6 @@
 ![Tests](https://img.shields.io/badge/tests-pytest-brightgreen)
 ![Python](https://img.shields.io/badge/python-3.11%2B-blue)
 ![License](https://img.shields.io/github/license/SagarBiswas-MultiHAT/AiPhishPlayground)
-![Vulnerabilities](https://img.shields.io/github/vulnerabilities/SagarBiswas-MultiHAT/AiPhishPlayground)
 ![Ruff](https://img.shields.io/badge/lint-ruff-101010)
 
 # PhishGuard - Email Phishing Detection
