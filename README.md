@@ -1,18 +1,9 @@
-
-
-
-
-
-## Project Structure
-
-```
-phishguard/
-├── app.py
-├── phishing_data.json
-├── requirements.txt
-├── requirements-dev.txt
-├── requirements-ai.txt
-```
+[![CI](https://img.shields.io/github/actions/workflow/status/SagarBiswas-MultiHAT/AiPhishPlayground/get-started-with-github-actions.yml?branch=main)](https://github.com/SagarBiswas-MultiHAT/AiPhishPlayground/actions)
+![Tests](https://img.shields.io/badge/tests-pytest-brightgreen)
+![Python](https://img.shields.io/badge/python-3.11%2B-blue)
+![License](https://img.shields.io/github/license/SagarBiswas-MultiHAT/AiPhishPlayground)
+![Vulnerabilities](https://img.shields.io/github/vulnerabilities/SagarBiswas-MultiHAT/AiPhishPlayground)
+![Ruff](https://img.shields.io/badge/lint-ruff-101010)
 
 # PhishGuard - Email Phishing Detection
 
@@ -20,7 +11,7 @@ PhishGuard is a fast, game-like phishing awareness trainer. It serves one short 
 
 ---
 
-![photo](https://imgur.com/MttZMLQ.png)
+![](https://imgur.com/MttZMLQ.png)
 
 ---
 
