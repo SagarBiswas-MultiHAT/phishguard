@@ -1,10 +1,18 @@
+# PhishGuard - Email Phishing Detection
+
+<div align="right">
+
 [![CI](https://img.shields.io/github/actions/workflow/status/SagarBiswas-MultiHAT/AiPhishPlayground/get-started-with-github-actions.yml?branch=main)](https://github.com/SagarBiswas-MultiHAT/AiPhishPlayground/actions)
+&nbsp;
 ![Tests](https://img.shields.io/badge/tests-pytest-brightgreen)
+&nbsp;
 ![Python](https://img.shields.io/badge/python-3.11%2B-blue)
+&nbsp;
 ![License](https://img.shields.io/github/license/SagarBiswas-MultiHAT/AiPhishPlayground)
+&nbsp;
 ![Ruff](https://img.shields.io/badge/lint-ruff-101010)
 
-# PhishGuard - Email Phishing Detection
+</div>
 
 PhishGuard is a fast, game-like phishing awareness trainer. It serves one short message at a time, asks the user to decide whether it is phishing or legitimate, and tracks score in real time. The project is intentionally lightweight so it can run locally, in workshops, or as a demo for security awareness.
 
