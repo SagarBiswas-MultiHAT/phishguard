@@ -2,13 +2,13 @@
 
 <div align="right">
 
-[![CI](https://img.shields.io/github/actions/workflow/status/SagarBiswas-MultiHAT/AiPhishPlayground/get-started-with-github-actions.yml?branch=main)](https://github.com/SagarBiswas-MultiHAT/AiPhishPlayground/actions)
+[![CI](https://img.shields.io/github/actions/workflow/status/SagarBiswas-MultiHAT/Ai-Phishy-Playground/get-started-with-github-actions.yml?branch=main)](https://github.com/SagarBiswas-MultiHAT/Ai-Phishy-Playground/actions)
 &nbsp;
 ![Tests](https://img.shields.io/badge/tests-pytest-brightgreen)
 &nbsp;
 ![Python](https://img.shields.io/badge/python-3.11%2B-blue)
 &nbsp;
-![License](https://img.shields.io/github/license/SagarBiswas-MultiHAT/AiPhishPlayground)
+![License](https://img.shields.io/github/license/SagarBiswas-MultiHAT/Ai-Phishy-Playground)
 &nbsp;
 ![Ruff](https://img.shields.io/badge/lint-ruff-101010)
 
